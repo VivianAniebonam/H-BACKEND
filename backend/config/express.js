@@ -21,6 +21,7 @@ app.options("*", cors());
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use('/testimony', testimonyRouter);
 
 // Use the imported route files
 app.use("/", indexRouter);

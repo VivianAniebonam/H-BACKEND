@@ -1,10 +1,8 @@
-var express = require("express");
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
+const testimonyController = require('../controllers/testimony');
 
-let testimonyController = require("../controllers/testimony");
-
-// Define Testimony routes
-router.post("/create", testimonyController.createTestimony); // Create a new testimony
+router.post('/create', testimonyController.createTestimony);
 router.get("/get/:testimonyId", testimonyController.getTestimonyById); // Get a testimony by testimonyId
 router.put("/update/:testimonyId", testimonyController.updateTestimony); // Update a testimony by testimonyId
 router.delete("/delete/:testimonyId", testimonyController.removeTestimony); // Delete a testimony by testimonyId
