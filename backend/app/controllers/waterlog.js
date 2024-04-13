@@ -1,4 +1,4 @@
-const WaterLog = require("../models/waterLog");
+const WaterLog = require("../models/waterlog");
 
 // Create a new water log entry
 module.exports.createWaterLog = async function (req, res, next) {
