@@ -1,37 +1,13 @@
 const Testimony = require("../models/testimony");
 
-// Create a new testimony
-module.exports.createTestimony = async function (req, res, next) {
+exports.createTestimony = async function (req, res) {
+  const { firstName, lastName, title, content } = req.body;
   try {
-    // Extracting the fields from the request body based on frontend structure
-    const { name, title, message } = req.body;
-    
-    // Splitting the name into first and last names
-    let [firstName, ...lastNameParts] = name.split(' ');
-    let lastName = lastNameParts.join(' ');
-
-    // Creating a new testimony with the mapped fields
-    const newTestimonyData = {
-      firstName: firstName,
-      lastName: lastName || '', // Use an empty string if lastName is not provided
-      title: title,
-      content: message, // Assuming the 'message' field from frontend should be mapped to 'content' in the backend
-      // Other fields like datePosted, rating, isVisible can keep their default values
-    };
-
-    const newTestimony = new Testimony(newTestimonyData);
-
-    // Save the new testimony to the database
-    const result = await newTestimony.save();
-
-    res.json({
-      success: true,
-      message: "Testimony created successfully.",
-      testimony: result, // Optionally send back the created testimony details
-    });
+    const newTestimony = new Testimony({ firstName, lastName, title, content });
+    const savedTestimony = await newTestimony.save();
+    res.status(201).json({ message: "Testimony created successfully", testimony: savedTestimony });
   } catch (error) {
-    console.log(error);
-    next(error);
+    res.status(500).json({ message: "Error creating testimony", error: error.message });
   }
 };
 
