@@ -44,12 +44,10 @@
 //       type: Date,
 //       default: Date.now,
 //     },
-    
+
 //   },
 //   { timestamps: true }
 // );
-
-
 
 // UserSchema.virtual("password").set(function (password) {
 //   if (password.length < 6) {
@@ -62,7 +60,6 @@
 //     this.hashed_password = this.hashPassword(password);
 //   }
 // });
-
 
 // UserSchema.methods.hashPassword = function (password) {
 //   if (!password) {
@@ -83,7 +80,6 @@
 // UserSchema.methods.authenticate = function (password) {
 //   return this.hashed_password === this.hashPassword(password);
 // };
-
 
 // UserSchema.set("toJSON", {
 //   virtuals: true,
@@ -128,6 +124,14 @@ const bcrypt = require("bcryptjs");
 const Schema = mongoose.Schema;
 const UserSchema = new Schema(
   {
+    firstName: {
+      type: String,
+      required: "First name is required",
+    },
+    lastName: {
+      type: String,
+      required: "Last name is required",
+    },
     username: {
       type: String,
       unique: true,
@@ -188,4 +192,4 @@ UserSchema.set("toJSON", {
   },
 });
 
-module.exports = mongoose.model("User", UserSchema, 'Users');
+module.exports = mongoose.model("User", UserSchema, "Users");
