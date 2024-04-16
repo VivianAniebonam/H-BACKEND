@@ -9,8 +9,6 @@ module.exports.create = async function (req, res, next) {
     // Extract countryCode and phoneNumber from req.body
     const { phoneNumberFull, phoneNumber, ...restOfBody } = req.body;
 
-   
-
     // Create a new user based on the incoming JSON data, including the phoneNumberFull
     const newUser = new UserModel({
       ...restOfBody,
@@ -33,14 +31,13 @@ module.exports.create = async function (req, res, next) {
   }
 };
 
-
 //Fetching a user by using his/her Id
 exports.getUserByUserId = async (req, res, next) => {
   try {
     const userId = req.params.userId;
-    console.log("Received userId:", userId);
+    console.log("Received userId:", req.params.userId);
 
-    const user = await User.findOne({ userId: userId });
+    const user = await User.findOne({ _id: userId });
     if (!user) {
       console.log("User not found for userId:", userId);
       return res.status(404).json({ message: "User not found" });
@@ -56,18 +53,14 @@ exports.getUserByUserId = async (req, res, next) => {
   }
 };
 
-
 // Update a user
 exports.updateUser = async (req, res) => {
   try {
     const { userId } = req.params;
+    console.log("Received userId:", userId);
     const updatedData = req.body;
 
-    const updatedUser = await User.findOneAndUpdate(
-      { userId: userId },
-      updatedData,
-      { new: true }
-    );
+    const updatedUser = await User.findOneAndUpdate({ _id: userId }, updatedData, { new: true });
 
     if (updatedUser) {
       res.status(200).json({
@@ -85,8 +78,6 @@ exports.updateUser = async (req, res) => {
   }
 };
 
-
-
 //Reading user information via Id
 exports.read = async (req, res) => {
   try {
@@ -101,8 +92,7 @@ exports.read = async (req, res) => {
   }
 };
 
-
-//Deleting a User 
+//Deleting a User
 module.exports.remove = async (req, res, next) => {
   try {
     let id = req.params.userId;
